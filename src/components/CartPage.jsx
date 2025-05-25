@@ -13,13 +13,26 @@ function CartPage() {
 
   return (
     <>
-      <h2 className="text-center my-10">This is Your Cart</h2>
-      <div>
-        {cartItems.map((cartItem) => (
-          <CartCard key={cartItem.id} cartItem={cartItem} />
-        ))}
+      <div className="flex flex-col">
+        <h2 className="text-center my-10">This is Your Cart</h2>
+        <div>
+          {cartItems.map((cartItem) => (
+            <CartCard key={cartItem.id} cartItem={cartItem} />
+          ))}
+        </div>
+        <div className="text-xl p-6 ml-auto">
+          <h2>
+            Total: ${" "}
+            {cartItems
+              .reduce(
+                (acc, currentValue) =>
+                  acc + currentValue.qty * currentValue.price,
+                0
+              )
+              .toFixed(2)}
+          </h2>
+        </div>
       </div>
-      <div>Totals: </div>
     </>
   );
 }
