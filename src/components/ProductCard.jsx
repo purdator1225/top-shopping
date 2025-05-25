@@ -1,29 +1,14 @@
 import { useState } from "react";
 import QuantitySelector from "./QuantitySelector";
 
-function ProductCard({ title, price, image, rating, id, cartContext }) {
-  const { cartItems, setCartItems } = cartContext;
+import { useContext } from "react";
+import { ShopContext } from "../pages/Layout";
 
+function ProductCard({ title, price, image, rating, id }) {
+  const { addToCart, products } = useContext(ShopContext);
   const [quantityToAdd, setQuantityToAdd] = useState(1);
 
-  console.log(cartContext);
-
-  const handleAddToCart = () => {
-    setCartItems((prev) => {
-      const exists = prev.find((item) => item.id === id);
-      if (exists) {
-        return prev.map((item) =>
-          item.id === id ? { ...item, qty: item.qty + quantityToAdd } : item
-        );
-      } else {
-        return [...prev, { id, price, image, title, qty: quantityToAdd }];
-      }
-    });
-
-    setQuantityToAdd(1);
-
-    console.log("cartItems", cartItems);
-  };
+  const product = products.find((matchedProduct) => matchedProduct.id === id);
 
   return (
     <div className=" bg-stone-100 p-5 flex flex-col gap-2 text-black rounded-2xl">
@@ -41,7 +26,7 @@ function ProductCard({ title, price, image, rating, id, cartContext }) {
       />
       <button
         data-id={id}
-        onClick={handleAddToCart}
+        onClick={() => addToCart(product, quantityToAdd)}
         className="bg-red-500 p-5 text-white rounded-4xl"
       >
         Add to Cart

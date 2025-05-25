@@ -1,13 +1,15 @@
 import React from "react";
-import { useOutletContext } from "react-router";
 import QuantitySelector from "./QuantitySelector";
 import { useState } from "react";
 import CartCard from "./CartCard";
 
-function CartPage() {
-  const { cartItems, setCartItems } = useOutletContext();
+import { useContext } from "react";
+import { ShopContext } from "../pages/Layout";
 
+function CartPage() {
   const [quantityToAddCart, setQuantityToAddCart] = useState();
+
+  const { cartItems } = useContext(ShopContext);
 
   return (
     <>
@@ -17,6 +19,7 @@ function CartPage() {
           <CartCard key={cartItem.id} cartItem={cartItem} />
         ))}
       </div>
+      <div>Totals: </div>
     </>
   );
 }

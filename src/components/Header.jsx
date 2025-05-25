@@ -1,7 +1,11 @@
 import { NavLink } from "react-router";
 import Cart from "./Cart";
 
-function Header({ cartItems }) {
+import { useContext } from "react";
+import { ShopContext } from "../pages/Layout";
+
+function Header() {
+  const { cartItems } = useContext(ShopContext);
   return (
     <div className="p-5 bg-blue-700 text-white">
       <div className="max-w-screen-xl m-auto flex justify-center gap-4">
